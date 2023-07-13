@@ -7,11 +7,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "react-native";
 import { useChatClient } from "./useChatClient";
 import { AppProvider } from "./appContext";
-import { OverlayProvider } from "stream-chat-expo";
+import { Chat, OverlayProvider } from "stream-chat-expo";
+import { StreamChat } from "stream-chat";
+import { StreamChatRN } from "stream-chat-expo"; // this might be the correct version compared to the above line
+import { chatApiKey } from "./chatConfig";
 
 const Stack = createStackNavigator();
 
 const HomeScreen = () => <Text>Home Screen</Text>;
+
+const chatClient = StreamChat.getInstance(chatApiKey);
 
 const NavigationStack = () => {
   const { clientIsReady } = useChatClient();
@@ -22,9 +27,11 @@ const NavigationStack = () => {
 
   return (
     <OverlayProvider>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
+      <Chat client={chatClient}>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      </Chat>
     </OverlayProvider>
   );
 };

@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "react-native";
 import { useChatClient } from "./useChatClient";
 import { AppProvider } from "./appContext";
+import { OverlayProvider } from "stream-chat-expo";
 
 const Stack = createStackNavigator();
 
@@ -20,9 +21,11 @@ const NavigationStack = () => {
   }
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
+    <OverlayProvider>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </OverlayProvider>
   );
 };
 

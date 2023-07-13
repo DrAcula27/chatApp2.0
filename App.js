@@ -47,13 +47,24 @@ const ChannelListScreen = ({ navigation }) => {
 };
 
 const ChannelScreen = ({ navigation }) => {
-  const { channel } = useAppContext();
+  const { channel, setThread } = useAppContext();
   return (
     <Channel channel={channel}>
-      <MessageList />
+      <MessageList
+        onThreadSelect={(message) => {
+          if (channel?.id) {
+            setThread(message);
+            navigation.navigate("ThreadScreen");
+          }
+        }}
+      />
       <MessageInput />
     </Channel>
   );
+};
+
+const ThreadScreen = ({ navigation }) => {
+  return null;
 };
 
 const Stack = createStackNavigator();
@@ -74,6 +85,7 @@ const NavigationStack = () => {
             component={ChannelListScreen}
           />
           <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
+          <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
         </Stack.Navigator>
       </Chat>
     </OverlayProvider>

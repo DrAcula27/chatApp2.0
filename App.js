@@ -1,4 +1,5 @@
 // gesture-handler must be imported at the top of the entry file (app.js in this case) before anything else
+import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -7,11 +8,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "react-native";
 import { useChatClient } from "./useChatClient";
 import { AppProvider } from "./appContext";
-import { Chat, OverlayProvider, ChannelList } from "stream-chat-expo";
+import {
+  Channel,
+  ChannelList,
+  Chat,
+  MessageInput,
+  MessageList,
+  OverlayProvider,
+} from "stream-chat-expo";
 import { StreamChat } from "stream-chat";
 import { chatApiKey, chatUserId } from "./chatConfig";
+import { useAppContext } from "./appContext";
 
-const Stack = createStackNavigator();
+const chatClient = StreamChat.getInstance(chatApiKey);
 
 const filters = {
   members: {
@@ -23,11 +32,31 @@ const sort = {
   last_message_at: -1,
 };
 
-const ChannelListScreen = (props) => {
-  return <ChannelList filters={filters} sort={sort} />;
+const ChannelListScreen = ({ navigation }) => {
+  const { setChannel } = useAppContext();
+  return (
+    <ChannelList
+      onSelect={(channel) => {
+        setChannel(channel);
+        navigation.navigate("ChannelScreen");
+      }}
+      filters={filters}
+      sort={sort}
+    />
+  );
 };
 
-const chatClient = StreamChat.getInstance(chatApiKey);
+const ChannelScreen = ({ navigation }) => {
+  const { channel } = useAppContext();
+  return (
+    <Channel channel={channel}>
+      <MessageList />
+      <MessageInput />
+    </Channel>
+  );
+};
+
+const Stack = createStackNavigator();
 
 const NavigationStack = () => {
   const { clientIsReady } = useChatClient();
@@ -40,7 +69,11 @@ const NavigationStack = () => {
     <OverlayProvider>
       <Chat client={chatClient}>
         <Stack.Navigator>
-          <Stack.Screen name="Channel List" component={ChannelListScreen} />
+          <Stack.Screen
+            name="ChannelListScreen"
+            component={ChannelListScreen}
+          />
+          <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
         </Stack.Navigator>
       </Chat>
     </OverlayProvider>

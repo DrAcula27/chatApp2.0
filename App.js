@@ -15,6 +15,7 @@ import {
   MessageInput,
   MessageList,
   OverlayProvider,
+  Thread,
 } from "stream-chat-expo";
 import { StreamChat } from "stream-chat";
 import { chatApiKey, chatUserId } from "./chatConfig";
@@ -64,7 +65,12 @@ const ChannelScreen = ({ navigation }) => {
 };
 
 const ThreadScreen = ({ navigation }) => {
-  return null;
+  const { channel, thread } = useAppContext();
+  return (
+    <Channel channel={channel} thread={thread} threadList>
+      <Thread />
+    </Channel>
+  );
 };
 
 const Stack = createStackNavigator();

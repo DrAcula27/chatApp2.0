@@ -7,15 +7,24 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "react-native";
 import { useChatClient } from "./useChatClient";
 import { AppProvider } from "./appContext";
-import { Chat, OverlayProvider } from "stream-chat-expo";
+import { Chat, OverlayProvider, ChannelList } from "stream-chat-expo";
 import { StreamChat } from "stream-chat";
-import { StreamChatRN } from "stream-chat-expo"; // this might be the correct version compared to the above line
-import { chatApiKey } from "./chatConfig";
+import { chatApiKey, chatUserId } from "./chatConfig";
 
 const Stack = createStackNavigator();
 
-const ChannelListScreen = () => {
-  return null;
+const filters = {
+  members: {
+    $in: [chatUserId],
+  },
+};
+
+const sort = {
+  last_message_at: -1,
+};
+
+const ChannelListScreen = (props) => {
+  return <ChannelList filters={filters} sort={sort} />;
 };
 
 const chatClient = StreamChat.getInstance(chatApiKey);

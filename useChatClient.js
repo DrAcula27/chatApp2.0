@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { StreamChat } from "stream-chat";
-import { StreamChatRN } from "stream-chat-expo"; // this might be the correct version compared to the above line
 import {
   chatApiKey,
   chatUserId,

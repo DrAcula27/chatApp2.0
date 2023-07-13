@@ -14,7 +14,9 @@ import { chatApiKey } from "./chatConfig";
 
 const Stack = createStackNavigator();
 
-const HomeScreen = () => <Text>Home Screen</Text>;
+const ChannelListScreen = () => {
+  return null;
+};
 
 const chatClient = StreamChat.getInstance(chatApiKey);
 
@@ -29,7 +31,7 @@ const NavigationStack = () => {
     <OverlayProvider>
       <Chat client={chatClient}>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Channel List" component={ChannelListScreen} />
         </Stack.Navigator>
       </Chat>
     </OverlayProvider>

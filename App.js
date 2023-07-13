@@ -69,6 +69,7 @@ const ThreadScreen = ({ navigation }) => {
   return (
     <Channel channel={channel} thread={thread} threadList>
       <Thread />
+      <MessageInput />
     </Channel>
   );
 };

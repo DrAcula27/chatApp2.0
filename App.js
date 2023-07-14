@@ -35,9 +35,7 @@ const CustomListItem = (props) => {
 };
 
 const filters = {
-  members: {
-    $in: [chatUserId],
-  },
+  $or: [{ members: { $in: [chatUserId] } }, { type: "livestream" }],
 };
 
 const sort = {
@@ -81,7 +79,7 @@ const ThreadScreen = ({ navigation }) => {
   return (
     <Channel channel={channel} thread={thread} threadList>
       <Thread />
-      <MessageInput />
+      {/* <MessageInput /> */}
     </Channel>
   );
 };

@@ -1,13 +1,13 @@
 // gesture-handler must be imported at the top of the entry file (app.js in this case) before anything else
-import "react-native-gesture-handler";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, View } from "react-native";
-import { useChatClient } from "./useChatClient";
-import { AppProvider } from "./appContext";
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, View } from 'react-native';
+import { useChatClient } from './useChatClient';
+import { AppProvider } from './appContext';
 import {
   Channel,
   ChannelList,
@@ -17,16 +17,16 @@ import {
   OverlayProvider,
   Thread,
   ChannelPreviewMessenger,
-} from "stream-chat-expo";
-import { StreamChat } from "stream-chat";
-import { chatApiKey, chatUserId } from "./chatConfig";
-import { useAppContext } from "./appContext";
+} from 'stream-chat-expo';
+import { StreamChat } from 'stream-chat';
+import { chatApiKey, chatUserId } from './chatConfig';
+import { useAppContext } from './appContext';
 
 const chatClient = StreamChat.getInstance(chatApiKey);
 
 const CustomListItem = (props) => {
   const { unread } = props;
-  const backgroundColor = unread ? "#8fcdea" : "#fff";
+  const backgroundColor = unread ? '#8fcdea' : '#fff';
   return (
     <View style={{ backgroundColor }}>
       <ChannelPreviewMessenger {...props} />
@@ -35,7 +35,7 @@ const CustomListItem = (props) => {
 };
 
 const filters = {
-  $or: [{ members: { $in: [chatUserId] } }, { type: "livestream" }],
+  $or: [{ members: { $in: [chatUserId] } }, { type: 'livestream' }],
 };
 
 const sort = {
@@ -49,7 +49,7 @@ const ChannelListScreen = ({ navigation }) => {
       Preview={CustomListItem}
       onSelect={(channel) => {
         setChannel(channel);
-        navigation.navigate("ChannelScreen");
+        navigation.navigate('ChannelScreen');
       }}
       filters={filters}
       sort={sort}
@@ -65,7 +65,7 @@ const ChannelScreen = ({ navigation }) => {
         onThreadSelect={(message) => {
           if (channel?.id) {
             setThread(message);
-            navigation.navigate("ThreadScreen");
+            navigation.navigate('ThreadScreen');
           }
         }}
       />
@@ -79,7 +79,6 @@ const ThreadScreen = ({ navigation }) => {
   return (
     <Channel channel={channel} thread={thread} threadList>
       <Thread />
-      {/* <MessageInput /> */}
     </Channel>
   );
 };
@@ -89,7 +88,7 @@ const Stack = createStackNavigator();
 const chatTheme = {
   channelPreview: {
     container: {
-      backgroundColor: "transparent",
+      backgroundColor: 'transparent',
     },
   },
 };
@@ -109,8 +108,14 @@ const NavigationStack = () => {
             name="ChannelListScreen"
             component={ChannelListScreen}
           />
-          <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
-          <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
+          <Stack.Screen
+            name="ChannelScreen"
+            component={ChannelScreen}
+          />
+          <Stack.Screen
+            name="ThreadScreen"
+            component={ThreadScreen}
+          />
         </Stack.Navigator>
       </Chat>
     </OverlayProvider>

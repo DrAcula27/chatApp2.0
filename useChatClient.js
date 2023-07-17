@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { StreamChat } from "stream-chat";
+import { useEffect, useState } from 'react';
+import { StreamChat } from 'stream-chat';
 import {
   chatApiKey,
   chatUserId,
   chatUserName,
   chatUserToken,
-} from "./chatConfig";
+} from './chatConfig';
 
 const user = {
   id: chatUserId,
